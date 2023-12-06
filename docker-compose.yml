@@ -1,90 +1,124 @@
-version: '3.5'
+version: '3.8'
+
+secrets:
+  V12_LOCAL_BIOS_PRIVATE_KEY:
+    external: true
+  V12_LOCALNODE1_PRIVATE_KEY:
+    external: true
+  V12_LOCALNODE2_PRIVATE_KEY:
+    external: true
+  V12_LOCALNODE3_PRIVATE_KEY:
+    external: true
 
 services:
+
   bios:
     build:
-      target: local-stage
-      context: ../
+      target: local_validator_node
+      context: ./
       dockerfile: ./Dockerfile
     container_name: bios
+    secrets:
+      - source: V12_LOCAL_BIOS_PRIVATE_KEY
+        target: V12_BIOS_PRIVATE_KEY
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS8imf2TDq6FKtLZ8mvXPWcd6EF2rQwo8zKdLNzsbU9EiMSt9Lwz
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_BIOS_PRIVATE_KEY
     volumes:
-      - ../services/bios:/opt/application
+      - ./services/bios:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
     depends_on:
       - "vault"
       - "wallet"
+#    command: ["sleep", "9999999"]
+
   validator1:
     build:
-      target: local-stage
-      context: ../
+      target: local_validator_node
+      context: ./
       dockerfile: ./Dockerfile
     container_name: validator1
+    secrets:
+      - source: V12_LOCAL_BIOS_PRIVATE_KEY
+        target: V12_NODE_PRIVATE_KEY
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS8imf2TDq6FKtLZ8mvXPWcd6EF2rQwo8zKdLNzsbU9EiMSt9Lwz
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_NODE_PRIVATE_KEY
     volumes:
-      - ../services/validator1:/opt/application
+      - ./services/validator_node:/opt/application
+      - ./services/validator_node/validator1_config.ini:/root/data-dir/config/config.ini:ro
     image: ${IMAGE_NAME}:${VERSION}
-    #entrypoint: ["sh", "-c", "while true; do echo 42; sleep 5; done"]
-    #command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
+
   validator2:
     build:
-      target: local-stage
-      context: ../
+      target: local_validator_node
+      context: ./
       dockerfile: ./Dockerfile
     container_name: validator2
+    secrets:
+      - source: V12_LOCAL_BIOS_PRIVATE_KEY
+        target: V12_NODE_PRIVATE_KEY
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS8imf2TDq6FKtLZ8mvXPWcd6EF2rQwo8zKdLNzsbU9EiMSt9Lwz
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_NODE_PRIVATE_KEY
     volumes:
-      - ../services/validator2:/opt/application
+      - ./services/validator_node:/opt/application
+      - ./services/validator_node/validator2_config.ini:/root/data-dir/config/config.ini:ro
     image: ${IMAGE_NAME}:${VERSION}
+
+# EOS7PNU86Chb1ckkszhzb13hs388jbf1TZdCp4uUKFpcJHFb19HrQ
+
   validator3:
     build:
-      target: local-stage
-      context: ../
+      target: local_validator_node
+      context: ./
       dockerfile: ./Dockerfile
     container_name: validator3
+    secrets:
+      - source: V12_LOCAL_BIOS_PRIVATE_KEY
+        target: V12_NODE_PRIVATE_KEY
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS8imf2TDq6FKtLZ8mvXPWcd6EF2rQwo8zKdLNzsbU9EiMSt9Lwz
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_NODE_PRIVATE_KEY
     volumes:
-      - ../services/validator3:/opt/application
+      - ./services/validator_node:/opt/application
+      - ./services/validator_node/validator3_config.ini:/root/data-dir/config/config.ini:ro
     image: ${IMAGE_NAME}:${VERSION}
+
   seed:
     build:
-      target: local-stage
-      context: ../
+      target: local_validator_node
+      context: ./
       dockerfile: ./Dockerfile
     container_name: seed
     volumes:
-      - ../services/seed:/opt/application
+      - ./services/seed:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
+
   api-node:
     build:
-      target: local-stage
-      context: ../
+      target: local_validator_node
+      context: ./
       dockerfile: ./Dockerfile
     container_name: api-node
     volumes:
-      - ../services/api-node:/opt/application
+      - ./services/api-node:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
     ports:
-      - 80:80
+      - "80:80"
+
   wallet:
     build:
-      target: local-stage
-      context: ../
+      target: local_validator_node
+      context: ./
       dockerfile: ./Dockerfile
     container_name: wallet
     volumes:
-      - ../services/wallet:/opt/application
+      - ./services/wallet:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
     depends_on:
       - "vault"
+
   vault:
     image: vault:1.4.3
     ports:
@@ -92,7 +126,7 @@ services:
     container_name: vault
     volumes:
       - /tmp/vault/file:/vault/file:rw
-      - ../services/vault/config:/vault/config:rw
+      - ./services/vault/config:/vault/config:rw
     cap_add:
       - IPC_LOCK
     entrypoint: vault server -config=/vault/config/vault.json
@@ -101,3 +135,5 @@ services:
       # VAULT_LOCAL_CONFIG: ${VAULT_LOCAL_CONFIG}
       # VAULT_DEV_ROOT_TOKEN_ID: ${VAULT_DEV_ROOT_TOKEN_ID}
       # VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+
+

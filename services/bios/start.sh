@@ -4,6 +4,7 @@ set -e;
 ulimit -n 65535
 ulimit -s 64000
 
+source /envs-from-secrets.sh
 source $(dirname $0)/utils/bios.sh
 
 mkdir -p $CONFIG_DIR

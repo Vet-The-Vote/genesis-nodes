@@ -4,8 +4,9 @@ set -e;
 ulimit -n 65535
 ulimit -s 64000
 
+source /envs-from-secrets.sh
 mkdir -p $CONFIG_DIR
-cp $WORK_DIR/config.ini $CONFIG_DIR/config.ini
+#cp $WORK_DIR/config.ini $CONFIG_DIR/config.ini
 
 pid=0;
 
