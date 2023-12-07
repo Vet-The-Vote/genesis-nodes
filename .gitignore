@@ -38,3 +38,6 @@ vault_keys.json
 
 # Local env
 .env
+
+# Jet Brains
+.idea/
