@@ -1,98 +1,106 @@
-version: '3.5'
+version: '3.8'
 
 services:
+
   bios:
     build:
       target: local-stage
-      context: ../
+      context: ./
       dockerfile: ./Dockerfile
     container_name: bios
     environment:
       - EOS_PUB_KEY
       - EOS_PRIV_KEY
     volumes:
-      - ../services/bios:/opt/application
+      - ./services/bios:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
     depends_on:
       - "vault"
       - "wallet"
+
   validator1:
     build:
       target: local-stage
-      context: ../
+      context: ./
       dockerfile: ./Dockerfile
     container_name: validator1
     environment:
       - EOS_PUB_KEY
       - EOS_PRIV_KEY
     volumes:
-      - ../services/validator1:/opt/application
+      - ./services/validator1:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
     #entrypoint: ["sh", "-c", "while true; do echo 42; sleep 5; done"]
     #command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
+
   validator2:
     build:
       target: local-stage
-      context: ../
+      context: ./
       dockerfile: ./Dockerfile
     container_name: validator2
     environment:
       - EOS_PUB_KEY
       - EOS_PRIV_KEY
     volumes:
-      - ../services/validator2:/opt/application
+      - ./services/validator2:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
+
   validator3:
     build:
       target: local-stage
-      context: ../
+      context: ./
       dockerfile: ./Dockerfile
     container_name: validator3
     environment:
       - EOS_PUB_KEY
       - EOS_PRIV_KEY
     volumes:
-      - ../services/validator3:/opt/application
+      - ./services/validator3:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
+
   seed:
     build:
       target: local-stage
-      context: ../
+      context: ./
       dockerfile: ./Dockerfile
     container_name: seed
     volumes:
-      - ../services/seed:/opt/application
+      - ./services/seed:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
+
   api-node:
     build:
       target: local-stage
-      context: ../
+      context: ./
       dockerfile: ./Dockerfile
     container_name: api-node
     volumes:
-      - ../services/api-node:/opt/application
+      - ./services/api-node:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
-    ports:
-      - 80:80
+#    ports:
+#      - 80:80
+
   wallet:
     build:
       target: local-stage
-      context: ../
+      context: ./
       dockerfile: ./Dockerfile
     container_name: wallet
     volumes:
-      - ../services/wallet:/opt/application
+      - ./services/wallet:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
     depends_on:
       - "vault"
+
   vault:
     image: vault:1.4.3
     ports:
       - "8200:8200"
     container_name: vault
     volumes:
-      - /tmp/vault/file:/vault/file:rw
-      - ../services/vault/config:/vault/config:rw
+#      - /tmp/vault/file:/vault/file:rw
+      - ./services/vault/config:/vault/config:rw
     cap_add:
       - IPC_LOCK
     entrypoint: vault server -config=/vault/config/vault.json
