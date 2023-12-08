@@ -1,18 +1,26 @@
 # V12 Node Installation
 
+
+## Building the V12 Node
+
 To build the V12 node execute:
 
 ```shell script
 VERSION_NUMBER=0.9.beta docker-compose build
 ```
 
-To run the V12 node execute:
+## Running the V12 Node on localhost
+
+To run the V12 node on your local workstation execute the following:
 
 ```shell script
-export EOS_PUB_KEY=EOS7XHH6htVrHa9uQSNdhj1JbJ5RzURACEMXdxmV2Cbk4E8NGhWQ7
-export EOS_PRIV_KEY=# TODO: add private key using Docker secrets
-VERSION_NUMBER=0.9.beta docker-compose up
+echo "V12_private_key_1" | docker secret create V12_LOCALHOST_BIOS_PRIVATE_KEY -
+echo "V12_private_key_2" | docker secret create V12_LOCALHOST_VALIDATOR1_PRIVATE_KEY -
+echo "V12_private_key_3" | docker secret create V12_LOCALHOST_VALIDATOR2_PRIVATE_KEY - 
+echo "V12_private_key_4" | docker secret create V12_LOCALHOST_VALIDATOR3_PRIVATE_KEY - 
+VERSION_NUMBER=0.9.beta docker stack deploy -c stack.localhost.yaml v12
 ```
+
 
 
 

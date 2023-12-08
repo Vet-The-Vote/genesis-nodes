@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+
+  bios:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    build:
+      target: v12_debug_node
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: bios
+
+  validator1:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    build:
+      target: v12_debug_node
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: validator1
+
+  validator2:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    build:
+      target: v12_debug_node
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: validator2
+
+  validator3:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    build:
+      target: v12_debug_node
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: validator3
+
+  seed:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    build:
+      target: v12_debug_node
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: seed
+
+  api-node:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    build:
+      target: v12_debug_node
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: api-node
+
+
+

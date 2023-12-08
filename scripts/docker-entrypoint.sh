@@ -26,6 +26,14 @@ echo "Executing ${CWD}/docker-entrypoint.sh ..."
 # source ENVs from docker secrets.
 . $CWD/envs-from-secrets.sh
 
+# use ONLY in non-production containers!
+if [[ $VERBOSE == "true" ]]; then
+	print_line ""
+	echo "ENVs:"
+	env | sort
+	print_line ""
+fi
+
 # start the app service
 print_line ""
 echo "Starting up container with the following command: "

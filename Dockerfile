@@ -67,6 +67,11 @@ RUN	useradd -r -s /usr/sbin/nologin \
 	--no-create-home \
 	$V12_USER
 
+# install Docker entrypoint files to enable use of Docker secrets
+RUN mkdir -p /opt/scripts
+COPY ./scripts/* /opt/scripts/
+RUN chmod ug+x /opt/scripts/*.sh
+
 # change ownership of files and directories
 RUN chown -R $V12_USER:$V12_USER $INSTALL_DIR
 RUN chown -R $V12_USER:$V12_USER $HOME_DIR
@@ -76,12 +81,15 @@ RUN chown -R $V12_USER:$V12_USER $BACKUPS_DIR
 # Define working directory
 WORKDIR $INSTALL_DIR
 
+CMD ["/opt/application/start.sh"]
+ENTRYPOINT ["/opt/scripts/docker-entrypoint.sh"]
+
 ################################################################################
 # V12 node release build
 FROM base_node as v12_node
 # RUN chmod +x $INSTALL_DIR/start.sh
 USER $V12_USER
-CMD ["/opt/application/start.sh"]
+
 
 ################################################################################
 # V12 node debug build
@@ -90,6 +98,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends jq curl \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 # RUN chmod +x $INSTALL_DIR/start.sh
+RUN apt-get update && apt-get install -y iputils-ping
+
 USER $V12_USER
-CMD ["/opt/application/start.sh"]
+
 

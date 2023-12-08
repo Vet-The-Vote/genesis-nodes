@@ -11,8 +11,8 @@ pid=0;
 
 nodeos=$"nodeos \
   --config-dir $CONFIG_DIR \
-  --data-dir $HOME_DIR \
-  --blocks-dir $HOME_DIR/blocks" ;
+  --data-dir $DATA_DIR \
+  --blocks-dir $DATA_DIR/blocks" ;
 
 term_handler() {
   if [ $pid -ne 0 ]; then
@@ -37,9 +37,9 @@ start_fresh_nodeos() {
 
 trap 'echo "Shutdown of EOSIO service...";kill ${!}; term_handler' 2 15;
 
-if [ ! -d $HOME_DIR/blocks ]; then
+if [ ! -d $DATA_DIR/blocks ]; then
   start_fresh_nodeos &
-elif [ -d $HOME_DIR/blocks ]; then
+elif [ -d $DATA_DIR/blocks ]; then
   start_nodeos &
 fi
 
