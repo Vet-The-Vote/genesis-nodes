@@ -22,6 +22,11 @@ services:
 
   bios:
     image: registry.cybertron.ninja/v12node:jonin
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+        constraints: [node.labels.v12_jonin2==true]
     networks:
       v12_mainnet_external:
         aliases:
@@ -39,6 +44,11 @@ services:
 
   validator1:
     image: registry.cybertron.ninja/v12node:jonin
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+        constraints: [node.labels.v12_jonin2==true]
     networks:
       v12_mainnet_external:
         aliases:
@@ -56,6 +66,11 @@ services:
 
   validator2:
     image: registry.cybertron.ninja/v12node:jonin
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+        constraints: [node.labels.v12_jonin1==true]
     networks:
       v12_mainnet_external:
         aliases:
@@ -73,6 +88,11 @@ services:
 
   validator3:
     image: registry.cybertron.ninja/v12node:jonin
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+        constraints: [node.labels.v12_jonin1==true]
     networks:
       v12_mainnet_external:
         aliases:
@@ -90,6 +110,11 @@ services:
 
   seed:
     image: registry.cybertron.ninja/v12node:jonin
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+        constraints: [node.labels.v12_jonin1==true]
     networks:
       v12_mainnet_external:
         aliases:
@@ -102,6 +127,11 @@ services:
 
   api-node:
     image: registry.cybertron.ninja/v12node:jonin
+    deploy:
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+        constraints: [node.labels.v12_jonin1==true]
     networks:
       v12_mainnet_external:
         aliases:

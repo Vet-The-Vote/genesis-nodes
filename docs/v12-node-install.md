@@ -21,6 +21,13 @@ echo "V12_private_key_4" | docker secret create V12_LOCALHOST_VALIDATOR3_PRIVATE
 VERSION_NUMBER=0.9.beta docker stack deploy -c stack.localhost.yaml v12
 ```
 
+## Build the V12 Node for JONIN
+
+```shell script
+VERSION_NUMBER=jonin docker-compose build
+docker push registry.cybertron.ninja/v12node:jonin
+```
+
 ## Running the V12 Node on jonin
 
 To run the V12 nodes on `jonin` execute the following:
