@@ -98,7 +98,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends jq curl \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 # RUN chmod +x $INSTALL_DIR/start.sh
-RUN apt-get update && apt-get install -y iputils-ping
 
 USER $V12_USER
 
