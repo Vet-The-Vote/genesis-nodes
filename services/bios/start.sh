@@ -7,11 +7,11 @@ ulimit -s 64000
 source $(dirname $0)/utils/bios.sh
 
 mkdir -p $CONFIG_DIR
-cp $WORK_DIR/config.ini $CONFIG_DIR/config.ini
+cp $INSTALL_DIR/config.ini $CONFIG_DIR/config.ini
 
 pid=0;
 
-[[ -f /root/bios_ok ]] && bios_should_run=false || bios_should_run=true;
+[[ -f $HOME_DIR/bios_ok ]] && bios_should_run=false || bios_should_run=true;
 
 $bios_should_run && echo "Bios script is set to run";
 
@@ -40,12 +40,12 @@ start_nodeos() {
 
 start_bios_nodeos() {
   echo 'Starting new chain from genesis JSON...'
-  $nodeos --delete-all-blocks --genesis-json $WORK_DIR/genesis.json &
+  $nodeos --delete-all-blocks --genesis-json $INSTALL_DIR/genesis.json &
 }
 
 set_prods() {
   echo 'Setting Block Producer Schedule...'
-  cleos push action eosio setprods $WORK_DIR/utils/schedule.json -p eosio@active
+  cleos push action eosio setprods $INSTALL_DIR/utils/schedule.json -p eosio@active
 }
 
 trap 'echo "Shutting down nodeos service...";kill ${!}; term_handler' 2 15;
@@ -54,7 +54,7 @@ trap 'echo "Shutting down nodeos service...";kill ${!}; term_handler' 2 15;
 $bios_should_run && start_bios_nodeos || start_nodeos
 
 # Mark this as bios has already been run
-$bios_should_run && touch /root/bios_ok;
+$bios_should_run && touch $HOME_DIR/bios_ok;
 
 pid="$(pidof nodeos)"
 

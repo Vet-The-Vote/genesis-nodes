@@ -3,87 +3,87 @@ version: '3.8'
 services:
 
   bios:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER}
     build:
-      target: local-stage
+      target: v12_debug_node
       context: ./
       dockerfile: ./Dockerfile
     container_name: bios
     environment:
       EOS_PUB_KEY: EOS7XHH6htVrHa9uQSNdhj1JbJ5RzURACEMXdxmV2Cbk4E8NGhWQ7
-      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
+      EOS_PRIV_KEY: 5HsbkjspukPyS681Q9Sy4P2pDYQTryzhDN4LxQx8ypGweYorzYR
     volumes:
       - ./services/bios:/opt/application
-    image: ${IMAGE_NAME}:${VERSION}
 #    depends_on:
 #      - "vault"
 #      - "wallet"
 
   validator1:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER}
     build:
-      target: local-stage
+      target: v12_debug_node
       context: ./
       dockerfile: ./Dockerfile
     container_name: validator1
     environment:
       EOS_PUB_KEY: EOS6B6E89uA9gwBGB7Mfj5dfabSjuYkJEXosusYDQo6rfucS8tzWp
-      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
+      EOS_PRIV_KEY: 5J6GefknX3K2skrFKSTqUWUSRoqsWbQg9wVxDGKKKqahLgJxFkZ
     volumes:
       - ./services/validator1:/opt/application
-    image: ${IMAGE_NAME}:${VERSION}
     #entrypoint: ["sh", "-c", "while true; do echo 42; sleep 5; done"]
     #command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
 
   validator2:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER}
     build:
-      target: local-stage
+      target: v12_debug_node
       context: ./
       dockerfile: ./Dockerfile
     container_name: validator2
     environment:
       EOS_PUB_KEY: EOS6vbnmkDHHaYBLVDzRtVYPuHEtASpQ2mmuteV8Ji2E6LyTg2Fuf
-      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
+      EOS_PRIV_KEY: 5HqJv1xRE2biVxg9Y2SU4UcmNEMReCcSo4fjvSjoHYy9PYHvvpJ
     volumes:
       - ./services/validator2:/opt/application
-    image: ${IMAGE_NAME}:${VERSION}
 
   validator3:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER}
     build:
-      target: local-stage
+      target: v12_debug_node
       context: ./
       dockerfile: ./Dockerfile
     container_name: validator3
     environment:
       EOS_PUB_KEY: EOS8BjV7ypK5LV9qB48smbqARYFEyb5KrkX9fV3voCJMB4rft5ntz
-      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
+      EOS_PRIV_KEY: 5KFCAdcHYbXyPhjJazt7D2QaWHDjCTW4nA7A9ZxbZX5THWYfvHr
     volumes:
       - ./services/validator3:/opt/application
-    image: ${IMAGE_NAME}:${VERSION}
 
   seed:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER}
     build:
-      target: local-stage
+      target: v12_debug_node
       context: ./
       dockerfile: ./Dockerfile
     container_name: seed
     volumes:
       - ./services/seed:/opt/application
-    image: ${IMAGE_NAME}:${VERSION}
 
   api-node:
+    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER}
     build:
-      target: local-stage
+      target: v12_debug_node
       context: ./
       dockerfile: ./Dockerfile
     container_name: api-node
     volumes:
       - ./services/api-node:/opt/application
-    image: ${IMAGE_NAME}:${VERSION}
 #    ports:
 #      - 80:80
 
 #  wallet:
 #    build:
-#      target: local-stage
+#      target: v12_debug_node
 #      context: ./
 #      dockerfile: ./Dockerfile
 #    container_name: wallet

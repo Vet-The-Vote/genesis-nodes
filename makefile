@@ -10,7 +10,7 @@ build-docker-compose: ##@local Build local docker-compose
 build: ##@devops Builds a new  production docker image
 build:
 	@docker build \
-		--target prod-stage \
+		--target v12_node \
 		-t $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(VERSION) \
 		.
 

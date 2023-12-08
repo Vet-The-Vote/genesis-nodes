@@ -5,14 +5,14 @@ ulimit -n 65535
 ulimit -s 64000
 
 mkdir -p $CONFIG_DIR
-cp $WORK_DIR/config.ini $CONFIG_DIR/config.ini
+cp $INSTALL_DIR/config.ini $CONFIG_DIR/config.ini
 
 pid=0;
 
 nodeos=$"nodeos \
   --config-dir $CONFIG_DIR \
-  --data-dir $DATA_DIR \
-  --blocks-dir $DATA_DIR/blocks" ;
+  --data-dir $HOME_DIR \
+  --blocks-dir $HOME_DIR/blocks" ;
 
 term_handler() {
   if [ $pid -ne 0 ]; then
@@ -32,14 +32,14 @@ start_nodeos() {
 
 start_fresh_nodeos() {
   echo 'Starting new chain from genesis JSON'
-  $nodeos --delete-all-blocks --genesis-json $WORK_DIR/genesis.json &
+  $nodeos --delete-all-blocks --genesis-json $INSTALL_DIR/genesis.json &
 }
 
 trap 'echo "Shutdown of EOSIO service...";kill ${!}; term_handler' 2 15;
 
-if [ ! -d $DATA_DIR/blocks ]; then
+if [ ! -d $HOME_DIR/blocks ]; then
   start_fresh_nodeos &
-elif [ -d $DATA_DIR/blocks ]; then
+elif [ -d $HOME_DIR/blocks ]; then
   start_nodeos &
 fi
 

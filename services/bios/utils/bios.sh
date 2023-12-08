@@ -10,16 +10,16 @@ store_secret_on_vault() {
 }
 
 unlock_wallet() {
-  cleos wallet unlock --password $(cat /opt/application/secrets/wallet_password.txt) \
+  cleos wallet unlock --password $(cat ${INSTALL_DIR}/secrets/wallet_password.txt) \
     || echo "Wallet has already been unlocked..."
 }
 
 create_wallet() {
-  mkdir -p /opt/application/secrets
+  mkdir -p ${INSTALL_DIR}/secrets
   cleos wallet create --to-console \
     | awk 'FNR > 3 { print $1 }' \
     | tr -d '"' \
-    > /opt/application/secrets/wallet_password.txt;
+    > ${INSTALL_DIR}/secrets/wallet_password.txt;
   cleos wallet open;
   unlock_wallet
   cleos wallet import --private-key $EOS_PRIV_KEY;
