@@ -49,7 +49,7 @@ services:
       placement:
         max_replicas_per_node: 1
         constraints: [node.labels.v12_jonin2==true]
-    networks:s
+    networks:
       v12_mainnet_external:
         aliases:
           - validator1
