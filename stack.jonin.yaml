@@ -37,7 +37,7 @@ services:
     environment:
       EOS_PUB_KEY: EOS5xsW6nArVqhZkfMDj9T6sX8mJEvDGApDqBy6hCmg3dAxyuAEF3
       EOS_PRIV_KEY_FILE: /run/secrets/V12_BIOS_PRIVATE_KEY
-      VERBOSE: "true"
+      VERBOSE: "false"
     volumes:
       - ./services/bios:/opt/application
       - /mnt/nodes/v12/genesis/bios:/home/v12node
@@ -49,7 +49,7 @@ services:
       placement:
         max_replicas_per_node: 1
         constraints: [node.labels.v12_jonin2==true]
-    networks:
+    networks:s
       v12_mainnet_external:
         aliases:
           - validator1
@@ -59,7 +59,7 @@ services:
     environment:
       EOS_PUB_KEY: EOS6REpAwcReQm4TVYhzA8eyizonZMghdxymUBjQQgFCcSiNbkZWM
       EOS_PRIV_KEY_FILE: /run/secrets/V12_VALIDATOR1_PRIVATE_KEY
-      VERBOSE: "true"
+      VERBOSE: "false"
     volumes:
       - ./services/validator1:/opt/application
       - /mnt/nodes/v12/genesis/validator1:/home/v12node
@@ -81,7 +81,7 @@ services:
     environment:
       EOS_PUB_KEY: EOS7J1EdzcBTwGFUas1yn4XpSLc96jXESoSndtZDbCUV82n98NXVQ
       EOS_PRIV_KEY_FILE: /run/secrets/V12_VALIDATOR2_PRIVATE_KEY
-      VERBOSE: "true"
+      VERBOSE: "false"
     volumes:
       - ./services/validator2:/opt/application
       - /mnt/nodes/v12/genesis/validator2:/home/v12node
@@ -103,7 +103,7 @@ services:
     environment:
       EOS_PUB_KEY: EOS8cqtNw2RsHwZYvYVyARM4RWmDSGhrEncdSSPUEJwK2jeR37mit
       EOS_PRIV_KEY_FILE: /run/secrets/V12_VALIDATOR3_PRIVATE_KEY
-      VERBOSE: "true"
+      VERBOSE: "false"
     volumes:
       - ./services/validator3:/opt/application
       - /mnt/nodes/v12/genesis/validator3:/home/v12node
@@ -120,7 +120,7 @@ services:
         aliases:
           - seed
     environment:
-      VERBOSE: "true"
+      VERBOSE: "false"
     volumes:
       - ./services/seed:/opt/application
       - /mnt/nodes/v12/genesis/seed:/home/v12node
@@ -137,7 +137,7 @@ services:
         aliases:
           - api-node
     environment:
-      VERBOSE: "true"
+      VERBOSE: "false"
     volumes:
       - ./services/api-node:/opt/application
       - /mnt/nodes/v12/genesis/api-node:/home/v12node
