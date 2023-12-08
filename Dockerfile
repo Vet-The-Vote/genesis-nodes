@@ -70,7 +70,7 @@ RUN	useradd -r -s /usr/sbin/nologin \
 # install Docker entrypoint files to enable use of Docker secrets
 RUN mkdir -p /opt/scripts
 COPY ./scripts/* /opt/scripts/
-RUN chmod ug+x /opt/scripts/*.sh
+RUN chmod ugo+x /opt/scripts/*.sh
 
 # change ownership of files and directories
 RUN chown -R $V12_USER:$V12_USER $INSTALL_DIR

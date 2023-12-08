@@ -33,7 +33,7 @@ docker push registry.cybertron.ninja/v12node:jonin
 To run the V12 nodes on `jonin` execute the following:
 
 ```shell script
-docker stack deploy -c stack.jonin.yaml v12
+docker stack deploy -c stack.jonin.yaml --with-registry-auth v12
 ```
 
 
