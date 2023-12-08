@@ -9,8 +9,8 @@ services:
       dockerfile: ./Dockerfile
     container_name: bios
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS7XHH6htVrHa9uQSNdhj1JbJ5RzURACEMXdxmV2Cbk4E8NGhWQ7
+      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
     volumes:
       - ./services/bios:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
@@ -25,8 +25,8 @@ services:
       dockerfile: ./Dockerfile
     container_name: validator1
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS6B6E89uA9gwBGB7Mfj5dfabSjuYkJEXosusYDQo6rfucS8tzWp
+      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
     volumes:
       - ./services/validator1:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
@@ -40,8 +40,8 @@ services:
       dockerfile: ./Dockerfile
     container_name: validator2
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS6vbnmkDHHaYBLVDzRtVYPuHEtASpQ2mmuteV8Ji2E6LyTg2Fuf
+      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
     volumes:
       - ./services/validator2:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
@@ -53,8 +53,8 @@ services:
       dockerfile: ./Dockerfile
     container_name: validator3
     environment:
-      - EOS_PUB_KEY
-      - EOS_PRIV_KEY
+      EOS_PUB_KEY: EOS8BjV7ypK5LV9qB48smbqARYFEyb5KrkX9fV3voCJMB4rft5ntz
+      EOS_PRIV_KEY: # TODO: add private key using Docker secrets
     volumes:
       - ./services/validator3:/opt/application
     image: ${IMAGE_NAME}:${VERSION}
