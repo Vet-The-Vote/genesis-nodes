@@ -1,0 +1,115 @@
+version: '3.8'
+
+networks:
+  v12_mainnet_external:
+    external:
+      name: v12_mainnet_external
+  v12_testnet_internal:
+    external:
+      name: v12_testnet_internal
+
+secrets:
+  V12_JONIN_BIOS_PRIVATE_KEY:
+    external: true
+  V12_JONIN_VALIDATOR1_PRIVATE_KEY:
+    external: true
+  V12_JONIN_VALIDATOR2_PRIVATE_KEY:
+    external: true
+  V12_JONIN_VALIDATOR3_PRIVATE_KEY:
+    external: true
+
+services:
+
+  bios:
+    image: registry.cybertron.ninja/v12node:jonin
+    networks:
+      v12_mainnet_external:
+        aliases:
+          - bios
+    secrets:
+      - source: V12_JONIN_BIOS_PRIVATE_KEY
+        target: V12_BIOS_PRIVATE_KEY
+    environment:
+      EOS_PUB_KEY: EOS5xsW6nArVqhZkfMDj9T6sX8mJEvDGApDqBy6hCmg3dAxyuAEF3
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_BIOS_PRIVATE_KEY
+      VERBOSE: "true"
+    volumes:
+      - ./services/bios:/opt/application
+      - /mnt/nodes/v12/genesis/bios:/home/v12node
+
+  validator1:
+    image: registry.cybertron.ninja/v12node:jonin
+    networks:
+      v12_mainnet_external:
+        aliases:
+          - validator1
+    secrets:
+      - source: V12_JONIN_VALIDATOR1_PRIVATE_KEY
+        target: V12_VALIDATOR1_PRIVATE_KEY
+    environment:
+      EOS_PUB_KEY: EOS6REpAwcReQm4TVYhzA8eyizonZMghdxymUBjQQgFCcSiNbkZWM
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_VALIDATOR1_PRIVATE_KEY
+      VERBOSE: "true"
+    volumes:
+      - ./services/validator1:/opt/application
+      - /mnt/nodes/v12/genesis/validator1:/home/v12node
+
+  validator2:
+    image: registry.cybertron.ninja/v12node:jonin
+    networks:
+      v12_mainnet_external:
+        aliases:
+          - validator2
+    secrets:
+      - source: V12_JONIN_VALIDATOR2_PRIVATE_KEY
+        target: V12_VALIDATOR2_PRIVATE_KEY
+    environment:
+      EOS_PUB_KEY: EOS7J1EdzcBTwGFUas1yn4XpSLc96jXESoSndtZDbCUV82n98NXVQ
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_VALIDATOR2_PRIVATE_KEY
+      VERBOSE: "true"
+    volumes:
+      - ./services/validator2:/opt/application
+      - /mnt/nodes/v12/genesis/validator2:/home/v12node
+
+  validator3:
+    image: registry.cybertron.ninja/v12node:jonin
+    networks:
+      v12_mainnet_external:
+        aliases:
+          - validator3
+    secrets:
+      - source: V12_JONIN_VALIDATOR3_PRIVATE_KEY
+        target: V12_VALIDATOR3_PRIVATE_KEY
+    environment:
+      EOS_PUB_KEY: EOS8cqtNw2RsHwZYvYVyARM4RWmDSGhrEncdSSPUEJwK2jeR37mit
+      EOS_PRIV_KEY_FILE: /run/secrets/V12_VALIDATOR3_PRIVATE_KEY
+      VERBOSE: "true"
+    volumes:
+      - ./services/validator3:/opt/application
+      - /mnt/nodes/v12/genesis/validator3:/home/v12node
+
+  seed:
+    image: registry.cybertron.ninja/v12node:jonin
+    networks:
+      v12_mainnet_external:
+        aliases:
+          - seed
+    environment:
+      VERBOSE: "true"
+    volumes:
+      - ./services/seed:/opt/application
+      - /mnt/nodes/v12/genesis/seed:/home/v12node
+
+  api-node:
+    image: registry.cybertron.ninja/v12node:jonin
+    networks:
+      v12_mainnet_external:
+        aliases:
+          - api-node
+    environment:
+      VERBOSE: "true"
+    volumes:
+      - ./services/api-node:/opt/application
+      - /mnt/nodes/v12/genesis/api-node:/home/v12node
+
+
