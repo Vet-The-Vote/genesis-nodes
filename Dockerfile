@@ -1,6 +1,14 @@
 ################################################################################
+# V12 node builder
+#FROM ubuntu:18.04 as builder
+#
+#ENV EOS_SYSTEM_CONTRACTS_URL https://github.com/eosnetworkfoundation/eos-system-contracts/archive/refs/tags/v3.2.0.tar.gz
+#RUN apt-get update
+#RUN apt-get install -y wget jq git build-essential cmake
+
+################################################################################
 # V12 node base Docker image
-FROM ubuntu:18.04 as base_node
+FROM ubuntu:20.04 as base_node
 
 ARG V12_USER=${V12_USER:-v12node}
 ENV V12_USER=${V12_USER:-v12node}
@@ -16,47 +24,25 @@ ARG CONFIG_DIR=$DATA_DIR/config
 ENV CONFIG_DIR=$DATA_DIR/config
 ARG BACKUPS_DIR=$HOME_DIR/backups
 ENV BACKUPS_DIR=${HOME_DIR:-$HOME_DIR/backups}
-ENV EOSIO_PACKAGE_URL https://github.com/eosio/eos/releases/download/v2.0.7/eosio_2.0.7-1-ubuntu-18.04_amd64.deb
-ENV EOSIO_CDT_OLD_URL https://github.com/eosio/eosio.cdt/releases/download/v1.6.3/eosio.cdt_1.6.3-1-ubuntu-18.04_amd64.deb
-ENV EOSIO_CDT_URL https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+ENV ANTELOPE_LEAP_PKG_URL=https://github.com/AntelopeIO/leap/releases/download/v5.0.0/leap_5.0.0_amd64.deb
+ENV EOS_SYSTEM_CONTRACTS_VERSION=3.2.0
+ENV EOS_SYSTEM_CONTRACTS_URL=https://github.com/eosnetworkfoundation/eos-system-contracts/archive/refs/tags/v${EOS_SYSTEM_CONTRACTS_VERSION}.tar.gz
+ENV ANTELOPE_CDT_VERSION=4.0.1
+ENV ANTELOPEIO_CDT_URL=https://github.com/AntelopeIO/cdt/releases/download/v${ANTELOPE_CDT_VERSION}/cdt_${ANTELOPE_CDT_VERSION}_amd64.deb
+ENV BUILD_DIR=/opt/eos/build
+ARG ANTELOPE_LEAP_PKG=$BUILD_DIR/antelopeio-leap.deb
+ARG ANTELOPE_CDT_PKG=$BUILD_DIR/antelopeio-cdt.deb
+ENV EOS_SYSTEM_CONTRACTS_DIR=$BUILD_DIR/eos-system-contracts
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y wget jq git build-essential cmake
-
-RUN wget -O /eosio.deb $EOSIO_PACKAGE_URL \
-  && wget -O /eosio-cdt-v1.7.0.deb $EOSIO_CDT_URL \
-  && wget -O /eosio-cdt-v1.6.3.deb $EOSIO_CDT_OLD_URL
-
-RUN apt-get install -y /eosio.deb
-
-RUN apt-get install -y /eosio-cdt-v1.6.3.deb \
-  && git clone https://github.com/EOSIO/eosio.contracts.git /opt/old-eosio.contracts \
-  && cd /opt/old-eosio.contracts && git checkout release/1.8.x \
-  && rm -fr build \
-  && mkdir build  \
-  && cd build \
-  && cmake .. \
-  && make -j$(sysctl -n hw.ncpu)
-
-RUN apt-get install -y /eosio-cdt-v1.7.0.deb \
-  && git clone https://github.com/eoscostarica/eosio.contracts.git /opt/eosio.contracts \
-  && cd /opt/eosio.contracts && git checkout release/1.9.x \
-  && rm -fr build \
-  && mkdir build  \
-  && cd build \
-  && cmake .. \
-  && make -j$(sysctl -n hw.ncpu)
-
-# Remove all of the unnecessary files and apt cache
-RUN rm -Rf /eosio*.deb \
-  && apt-get remove -y wget \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
 
 # create directories
 RUN mkdir -p $INSTALL_DIR
 RUN mkdir -p $HOME_DIR
 RUN mkdir -p $CONFIG_DIR
 RUN mkdir -p $BACKUPS_DIR
+RUN mkdir -p $BUILD_DIR
 
 # create user account for V12 service
 RUN groupadd -f -g ${V12_GROUP_ID} ${V12_USER}
@@ -66,6 +52,31 @@ RUN	useradd -r -s /usr/sbin/nologin \
 	--home-dir $HOME_DIR \
 	--no-create-home \
 	$V12_USER
+
+RUN mkdir -p $BUILD_DIR
+RUN wget -O $ANTELOPE_LEAP_PKG $ANTELOPE_LEAP_PKG_URL \
+  && wget -O $BUILD_DIR/eos-system-contracts.tar.gz $EOS_SYSTEM_CONTRACTS_URL \
+  && wget -O $ANTELOPE_CDT_PKG $ANTELOPEIO_CDT_URL
+RUN tar xvzf $BUILD_DIR/eos-system-contracts.tar.gz --directory $BUILD_DIR
+RUN mv $BUILD_DIR/eos-system-contracts-${EOS_SYSTEM_CONTRACTS_VERSION} $EOS_SYSTEM_CONTRACTS_DIR
+
+RUN apt-get install -y $ANTELOPE_LEAP_PKG
+RUN apt-get install -y $ANTELOPE_CDT_PKG
+
+# build & install EOS System Contracts
+RUN cd $EOS_SYSTEM_CONTRACTS_DIR \
+  && rm -fr build \
+  && mkdir build  \
+  && cd build \
+  && cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF .. \
+  && make -j $(nproc)
+
+# Remove all of the unnecessary files and apt cache
+RUN rm -Rf $ANTELOPE_LEAP_PKG \
+  && rm -Rf $ANTELOPE_CDT_PKG \
+  && apt-get remove -y wget \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 # install Docker entrypoint files to enable use of Docker secrets
 RUN mkdir -p /opt/scripts

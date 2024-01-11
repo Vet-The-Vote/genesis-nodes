@@ -4,9 +4,9 @@ networks:
   v12_mainnet_external:
     external:
       name: v12_mainnet_external
-  v12_testnet_internal:
+  v12_mainnet_internal_2:
     external:
-      name: v12_testnet_internal
+      name: v12_mainnet_internal_2
 
 secrets:
   V12_JONIN_BIOS_PRIVATE_KEY:
@@ -136,6 +136,7 @@ services:
       v12_mainnet_external:
         aliases:
           - api-node
+          - api-node.v12.cybertron.ninja
     environment:
       VERBOSE: "false"
     volumes:
