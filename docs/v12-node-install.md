@@ -8,7 +8,7 @@ To build the V12 node execute:
 ```shell script
 export VERSION_NUMBER=0.9.1.beta
 VERSION_NUMBER=0.9.1.beta docker-compose build
-docker push registry.cybertron.ninja/v12node:${VERSION_NUMBER}
+docker push v12node:${VERSION_NUMBER}
 ```
 
 ## Running the V12 Node on localhost
@@ -27,8 +27,8 @@ VERSION_NUMBER=0.9.1.beta docker stack deploy -c stack.localhost.yaml v12
 
 ```shell script
 #VERSION_NUMBER=jonin docker-compose build
-docker image tag registry.cybertron.ninja/v12node:${VERSION_NUMBER} registry.cybertron.ninja/v12node:jonin
-docker push registry.cybertron.ninja/v12node:jonin
+docker image tag v12node:${VERSION_NUMBER} v12node:jonin
+docker push v12node:jonin
 ```
 
 ## Running the V12 Node on jonin

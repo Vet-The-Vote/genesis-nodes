@@ -162,11 +162,6 @@ deploy_system_contracts() {
 #  cleos set contract eosio.msig $EOSIO_CONTRACTS_DIRECTORY/eosio.msig/
   sleep 2;
 
-
-
-
-
-
   echo "System contracts deployed."
 }
 
@@ -182,27 +177,10 @@ create_producer_accounts() {
   # TODO: @danazkari this needs to be in json
   # and in an env variable so that it can be configured
   producer_accounts=( \
-    "baas1.uno" \
-    "baas1.dos" \
-    "baas1.tres" \
-    "baas1.cuatro" \
-    "baas1.cinco" \
-    "baas1.seis" \
-    "baas1.siete" \
-    "baas2.uno" \
-    "baas2.dos" \
-    "baas2.tres" \
-    "baas2.cuatro" \
-    "baas2.cinco" \
-    "baas2.seis" \
-    "baas2.siete" \
-    "baas3.uno" \
-    "baas3.dos" \
-    "baas3.tres" \
-    "baas3.cuatro" \
-    "baas3.cinco" \
-    "baas3.seis" \
-    "baas3.siete" \
+    "jonin.prime.1" \
+    "jonin.prime.2" \
+    "jonin.prime.3" \
+    "jonin.prime.4" \
   );
 
   for account in "${producer_accounts[@]}"; do

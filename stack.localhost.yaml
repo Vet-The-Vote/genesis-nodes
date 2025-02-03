@@ -21,7 +21,7 @@ secrets:
 services:
 
   bios:
-    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    image: v12node:${VERSION_NUMBER:-latest}
     networks:
       v12_testnet_external:
         aliases:
@@ -37,7 +37,7 @@ services:
       - ./services/bios:/opt/application
 
   validator1:
-    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    image: v12node:${VERSION_NUMBER:-latest}
     networks:
       v12_testnet_external:
         aliases:
@@ -53,7 +53,7 @@ services:
       - ./services/validator1:/opt/application
 
   validator2:
-    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    image: v12node:${VERSION_NUMBER:-latest}
     networks:
       v12_testnet_external:
         aliases:
@@ -69,7 +69,7 @@ services:
       - ./services/validator2:/opt/application
 
   validator3:
-    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    image: v12node:${VERSION_NUMBER:-latest}
     networks:
       v12_testnet_external:
         aliases:
@@ -85,7 +85,7 @@ services:
       - ./services/validator3:/opt/application
 
   seed:
-    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    image: v12node:${VERSION_NUMBER:-latest}
     networks:
       v12_testnet_external:
         aliases:
@@ -96,7 +96,7 @@ services:
       - ./services/seed:/opt/application
 
   api-node:
-    image: registry.cybertron.ninja/v12node:${VERSION_NUMBER:-latest}
+    image: v12node:${VERSION_NUMBER:-latest}
     networks:
       v12_testnet_external:
         aliases:

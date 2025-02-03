@@ -38,6 +38,13 @@ vault_keys.json
 
 # Local env
 .env
+venv/
 
 # Jet Brains
 .idea/
+
+# local temporary files
+leap_5.0.0_amd64.deb
+nodeos.txt
+cleos.txt
+contracts/*

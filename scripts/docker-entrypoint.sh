@@ -1,6 +1,6 @@
 #!/bin/bash
 ###################################################################################
-# Our standard Docker entrypoint for all Cybertron Ninja Docker services.
+# standard Docker entrypoint for Docker services.
 #
 # This entrypoint will do the following:
 #	- Retain all ENVs set in a service's Dockerfile and docker-compose.yaml file.
