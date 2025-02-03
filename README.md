@@ -1,18 +1,15 @@
 # V12 Genesis Node Launcher
 
 <p align="center">
-  <img src="https://gitlab.com/vetthevote/genesis-nodes/assets/logo_color_background_transparent_192x192.png" align="center" />
+  <img src="https://github.com/Vet-The-Vote/genesis-nodes/raw/master/assets/logo_color_background_transparent_192x192.png" align="center" />
 
 </p>
 
 <center>
 
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) ![GitHub](https://img.shields.io/github/license/Vet-The-Vote/genesis-nodes) ![GitHub repo size](https://img.shields.io/github/repo-size/Vet-The-Vote/genesis-nodes) ![Twitter Follow](https://img.shields.io/twitter/follow/mdellertson?style=social) ![GitHub forks](https://img.shields.io/github/forks/Vet-The-Vote/genesis-nodes?style=social)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) ![GitHub](https://img.shields.io/github/license/Vet-The-Vote/genesis-nodes) ![GitHub repo size](https://img.shields.io/github/repo-size/Vet-The-Vote/genesis-nodes) ![Twitter Follow](https://img.shields.io/twitter/follow/mdellertson?style=social)
 
 </center>
-
-https://gitlab.com/username/userproject/badges/master/pipeline.svg
-https://gitlab.com/username/userproject/badges/master/coverage.svg
 
 ## About This Project:
 
