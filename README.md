@@ -1,27 +1,26 @@
-# Containerized Node Definitions & Network Boot Sequence
+# V12 Genesis Node Launcher
 
 <p align="center">
-  <img src="https://github.com/eoscostarica/eos-rate/raw/master/docs/eoscostarica-logo-black.png" align="center" />
+  <img src="https://gitlab.com/vetthevote/genesis-nodes/assets/logo_color_background_transparent_192x192.png" align="center" />
+
 </p>
 
 <center>
 
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) ![GitHub](https://img.shields.io/github/license/eoscostarica/eosio-network-bootstrap) ![GitHub repo size](https://img.shields.io/github/repo-size/eoscostarica/eosio-network-bootstrap) ![Twitter Follow](https://img.shields.io/twitter/follow/eoscostarica?style=social) ![GitHub forks](https://img.shields.io/github/forks/eoscostarica/blockchain-nodes?style=social)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) ![GitHub](https://img.shields.io/github/license/Vet-The-Vote/genesis-nodes) ![GitHub repo size](https://img.shields.io/github/repo-size/Vet-The-Vote/genesis-nodes) ![Twitter Follow](https://img.shields.io/twitter/follow/mdellertson?style=social) ![GitHub forks](https://img.shields.io/github/forks/Vet-The-Vote/genesis-nodes?style=social)
 
 </center>
 
+https://gitlab.com/username/userproject/badges/master/pipeline.svg
+https://gitlab.com/username/userproject/badges/master/coverage.svg
 
 ## About This Project:
 
-This collection of scripts launches a local EOSIO network with multiple node configurations. There is also an automated boot sequence that utilizes a temporary "bios" node to launch the chain, deploy system contracts and set a schedule with three active block producer nodes. 
+This collection of scripts launches a local V12 network with multiple node configurations. There is also an automated boot sequence that utilizes a temporary "bios" node to launch the chain, deploy system contracts and set a schedule with three active block producer nodes. 
 
 This project can be useful as a development environment for system contracts.
 
 ![Blockchain Nodes](./blockchain-nodes.png)
-
-### Version
-
-- 0.1.0
 
 ## Installation
 Basic knowledge about Docker, Docker Compose, and Shell Script is required.
